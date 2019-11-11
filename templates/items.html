@@ -12,7 +12,6 @@
 </head>
 <style>
   .item {
-    height: 150px;
     padding:20px;
     margin: 30px 0px;
     color:#555555;
@@ -28,7 +27,7 @@
   .imagectr img{
     border-radius: 5px;
     position: absolute;
-    width:inherit;
+    width:130px;
   }
   .buybtn{
     margin-top:20px;
@@ -48,45 +47,84 @@
   <!-- Nav tabs -->
 <ul class="nav nav-tabs" id="myTab" role="tablist">
 <li class="nav-item">
-  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="Pastries" aria-selected="true">Pastries</a>
+  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#pastries" role="tab" aria-controls="Pastries" aria-selected="true">Pastries</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="Chocolates" aria-selected="false">Chocolates</a>
+  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#chocolates" role="tab" aria-controls="Chocolates" aria-selected="false">Chocolates</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="Dairy" aria-selected="false">Dairy</a>
+  <a class="nav-link" id="messages-tab" data-toggle="tab" href="#dairy" role="tab" aria-controls="Dairy" aria-selected="false">Dairy</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="Snacks" aria-selected="false">Snacks</a>
+  <a class="nav-link" id="settings-tab" data-toggle="tab" href="#snacks" role="tab" aria-controls="Snacks" aria-selected="false">Snacks</a>
 </li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
-<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-  <div class="row">
+<div class="tab-pane active" id="pastries" role="tabpanel" aria-labelledby="home-tab"></div>
+<div class="tab-pane" id="chocolates" role="tabpanel" aria-labelledby="profile-tab"></div>
+<div class="tab-pane" id="dairy" role="tabpanel" aria-labelledby="messages-tab"></div>
+<div class="tab-pane" id="snacks" role="tabpanel" aria-labelledby="settings-tab"> </div>
+</div>
+</div>
+</body>
+<script>
+for(var i=0; i<4; i++){
+var apiroute = "null"
+var divId = "null"
+if(i==0){
+  apiroute = '/api/getpastries';
+  divId = '#pastries';
 
+}
+
+if(i==1){
+  apiroute = '/api/getchocolates';
+  divId = '#chocolates';
+
+}
+if(i==2){
+  apiroute = '/api/getdairy';
+  divId = '#dairy';
+}
+if(i==3){
+  apiroute = '/api/getsnacks';
+  divId = '#snacks';
+}
+getdata(apiroute,divId)
+console.log(divId)
+}
+
+
+function getdata (apiroute,divId){
+fetch(apiroute)
+.then(result => result.json())
+.then(result => {
+  result.forEach(function(item){
+    var htmlData = `
     <div class="item rounded shadow col-md-12">
       <div class="row">
         <div class="imagectr col-md-2">
-          <img src="https://www.averiecooks.com/wp-content/uploads/2012/08/chocolatecake-8-480x360.jpg">
+          <img src="/images/${item[4]}" alt="${item[4]}">
         </div>
         <div class="imagectr col-md-8">
-          <h5>Chocolate cake</h5>
-          <span>Rs.32,000</span>
+          <h5>${item[1]}</h5>
+          <span>Rs.${item[2]}</span>
         </div>
         <div class="imagectr col-md-1">
           <button type="button" class="btn btn-primary buybtn">Buy</button>
         </div>
       </div>
     </div>
+    `
+    $(divId).append(htmlData)
 
-  </div>
-</div>
-<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">..</div>
-<div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
-<div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
-</div>
-</div>
-</body>
+  })
+})
+}
+
+
+
+</script>
 </html>

@@ -2,8 +2,7 @@ from flask import *
 import hashlib
 import sqlite3
 
-app = Flask(__name__)
-
+app = Flask(__name__, static_url_path="", static_folder="static")
 
 def gen_hash(str):
     hash = hashlib.sha256(str.encode())
@@ -90,20 +89,42 @@ def logout():
     resp.set_cookie('userid', '',expires=0)
     return resp
 
+
+#===============================================
 @app.route('/api/getpastries/')
 def getPastries():
-    return jsonify({'pastries':'pas1'})
+    with sqlite3.connect('database.db') as conn:
+        cur =conn.cursor()
+        cur.execute("SELECT * FROM products WHERE type = ?", ('pastries',))
+        result = cur.fetchall()
+        return jsonify(result)
 
 @app.route('/api/getchocolates/')
 def getChocolates():
-    return jsonify({'pastries':'pas1'})
+    with sqlite3.connect('database.db') as conn:
+        cur =conn.cursor()
+        cur.execute("SELECT * FROM products WHERE type = ?", ('chocolates',))
+        result = cur.fetchall()
+        return jsonify(result)
 
 @app.route('/api/getdairy/')
 def getdairy():
-    return jsonify({'pastries':'pas1'})
+    with sqlite3.connect('database.db') as conn:
+        cur =conn.cursor()
+        cur.execute("SELECT * FROM products WHERE type = ?", ('dairy',))
+        result = cur.fetchall()
+        return jsonify(result)
 
 @app.route('/api/getsnacks/')
 def getsnacks():
+    with sqlite3.connect('database.db') as conn:
+        cur =conn.cursor()
+        cur.execute("SELECT * FROM products WHERE type = ?", ('snacks',))
+        result = cur.fetchall()
+        return jsonify(result)
+
+@app.route('/api/buy/')
+def buy():
     #ashjfgshjagfhjsda
     return jsonify({'pastries':'pas1'})
 

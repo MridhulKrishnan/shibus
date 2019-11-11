@@ -14,13 +14,15 @@ conn.execute('''CREATE TABLE users
 		address TEXT
 		)''')
 
-conn.execute('''CREATE TABLE products
-		(productId INTEGER PRIMARY KEY,
-		name TEXT,
-		price REAL,
-		quantity TEXT
-
-		)''')
+# conn.execute('''CREATE TABLE products
+# 		(productId INTEGER PRIMARY KEY AUTOINCREMENT ,
+# 		name TEXT,
+# 		price TEXTL,
+# 		quantity TEXT,
+# 		image TEXT,
+# 		type TEXT
+#
+# 		)''')
 
 
 
